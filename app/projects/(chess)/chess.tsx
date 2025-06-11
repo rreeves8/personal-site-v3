@@ -23,7 +23,7 @@ function ijToAj(i: number, j: number) {
 }
 
 async function initMove() {
-  const { move } = minimax(chess, 4, "b");
+  const { move } = minimax(chess, 5, "b");
   chess.move(move!);
 }
 
