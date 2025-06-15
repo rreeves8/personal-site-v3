@@ -118,10 +118,10 @@ export function Chess({
                 c={c}
                 i={board.length - i - 1}
                 j={j}
-                onMove={({ clientX, clientY }) => {
+                onMove={useCallback(({ clientX, clientY }) => {
                   setDragPos([clientX - 32, clientY - 32]);
                   setClicked([i, j]);
-                }}
+                }, [])}
               />
             ))}
           </div>
@@ -185,10 +185,9 @@ function Cell({
     >
       {c && (
         <Image
-          height={11}
-          width={11}
-          cl
           property={`${i},${j}`}
+          width={42}
+          height={42}
           src={"/" + Pieces[`${c.type}${c.color}` as keyof typeof Pieces]}
           alt=""
         />
