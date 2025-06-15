@@ -25,7 +25,7 @@ const styles: Record<string, React.CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    flex: 1
+    flex: 1,
   },
   desc: {
     lineHeight: "48px",

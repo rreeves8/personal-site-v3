@@ -1,10 +1,19 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "nprogress/nprogress.css";
 import { Button } from "@/components/ui/button";
-import { CloudDownload, Download } from "lucide-react";
-import Link from "next/link";
+import { Download, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Link, Route } from "@/components/ui/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,67 +40,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
       >
-        <div className="flex items-center justify-center h-14">
-          <div className="flex flex-row items-center justify-between w-3/5">
-            <div className="flex flex-row items-center justify-center gap-1">
-              <Avatar>
-                <AvatarImage
-                  src="https://media.licdn.com/dms/image/v2/D4E03AQG1-FX5D-Y4Eg/profile-displayphoto-shrink_400_400/B4EZczZODqH8Ag-/0/1748913939468?e=1754524800&v=beta&t=jHcXhGq_y4mLX_jISVuo7LBstAMliaTttbqxRPXrksI"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <Button
-                variant="ghost"
-                className="text-xl font-semibold tracking-tight"
-                asChild
-              >
-                <Link href={"/"}>Magnus Reeves</Link>
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-xl font-normal tracking-tight"
-                asChild
-              >
-                <Link href={"/about"}>about</Link>
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-xl font-normal tracking-tight"
-                asChild
-              >
-                <Link href={"/projects"}>projects</Link>
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-xl font-normal tracking-tight"
-                asChild
-              >
-                <Link href={"/personal"}>personal</Link>
-              </Button>
-              <Button
-                variant="ghost"
-                className="text-xl font-normal tracking-tight"
-                asChild
-              >
-                <Link href={"/contact"}>contact</Link>
-              </Button>
-            </div>
-            <Button
-              variant="ghost"
-              className="text-xl font-normal tracking-tight"
-            >
-              <div className="flex flex-row items-center gap-2">
-                resume
-                <Download />
-              </div>
-            </Button>
-          </div>
-        </div>
-        <div className="flex-1 overflow-scroll">
-          <div className="w-4/5 mx-auto">{children}</div>
-          <footer className="w-4/5 border-t bg-background mx-auto py-4">
-            <p>{new Date().getFullYear()} Magnus Reeves personal site,</p>
+        <Nav />
+        <div className="flex-1 overflow-scroll flex flex-col">
+          <div className="w-4/5 mx-auto flex-1 flex">{children}</div>
+          <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto">
+            <p>{new Date().getFullYear()} Magnus Reeves</p>
             <p>developed using NextJS</p>
             <p>
               <Link
@@ -107,5 +60,79 @@ export default function RootLayout({
         </div>
       </body>
     </html>
+  );
+}
+
+{
+  /* <div className="flex lg:hidden">
+  
+</div>; */
+}
+
+const routes = ["experience", "personal", "chess", "contact"];
+
+function Nav() {
+  return (
+    <div className="w-full flex items-center justify-center h-14">
+      <div className="hidden lg:flex flex-row items-center justify-between basis-3/4">
+        <div className="flex flex-row items-center justify-center gap-1">
+          <Icon />
+          <Route href="/">Magnus Reeves</Route>
+          {routes.map((r) => (
+            <Route key={r}>{r}</Route>
+          ))}
+        </div>
+        <Resume />
+      </div>
+
+      <div className="flex lg:hidden flex-row justify-between items-center flex-1 px-7">
+        <div className="flex flex-row items-center justify-center gap-1">
+          <Icon />
+          <Route href="/">Magnus Reeves</Route>
+        </div>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant={"secondary"} className=" hover:cursor-pointer">
+              <Menu />
+            </Button>
+          </SheetTrigger>
+          <SheetContent className="w-[400px] sm:w-[540px]">
+            <SheetHeader>
+              <SheetTitle>Navigation</SheetTitle>
+              <SheetDescription>
+                <div className="flex flex-col gap-1">
+                  {routes.map((r) => (
+                    <Route key={r}>{r}</Route>
+                  ))}
+                </div>
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+  );
+}
+
+function Resume() {
+  return (
+    <Button variant="ghost" className="text-xl font-normal tracking-tight">
+      <div className="flex flex-row items-center gap-2">
+        resume
+        <Download />
+      </div>
+    </Button>
+  );
+}
+
+function Icon() {
+  return (
+    <Avatar>
+      <AvatarImage
+        src="https://gravatar.com/avatar/65a2b04d5bf09d66ab59ca5a1b3c52ee253530e87ee477f78f8b7779bd8814c9"
+        alt="@shadcn"
+      />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
   );
 }
