@@ -41,19 +41,29 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
       >
         <Nav />
-        <div className="flex-1 overflow-scroll flex flex-col">
-          <div className="sm:max-w-4/5 mx-auto flex flex-1">{children}</div>
+        <div className="pt-14 flex-1 flex flex-col">
+          <div className="sm:max-w-4/5 mx-auto flex flex-col flex-1">{children}</div>
           <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto flex flex-row justify-between">
             <div className="flex flex-row gap-4">
-              <span className={`icon-[simple-icons--linkedin] size-6`} />
+              <Link
+                href="https://www.linkedin.com/in/magnus-reeves/"
+                target="_blank"
+                className="link"
+                aria-label="GitHub repository"
+              >
+                <span className={`icon-[simple-icons--linkedin] size-6`} />
+              </Link>
+
               <span className={`icon-[simple-icons--github] size-6`} />
             </div>
             <div className="text-right">
-              <p className=" font-bold">{new Date().getFullYear()} Magnus Reeves</p>
+              <p className=" font-bold">
+                {new Date().getFullYear()} Magnus Reeves
+              </p>
               <p>Developed with NextJS</p>
               <p>
                 <Link
-                  href="https://github.com/rreeves8"
+                  href="https://github.com/rreeves8/personal-site-v3"
                   target="_blank"
                   className="link text-blue-600"
                   aria-label="GitHub repository"
@@ -69,17 +79,11 @@ export default function RootLayout({
   );
 }
 
-{
-  /* <div className="flex lg:hidden">
-  
-</div>; */
-}
-
 const routes = ["experience", "personal", "games", "contact"];
 
 function Nav() {
   return (
-    <div className="w-full flex items-center justify-center h-14">
+    <div className="fixed w-full flex items-center justify-center h-14 py-5 backdrop-blur-md">
       <div className="hidden lg:flex flex-row items-center justify-between basis-3/4">
         <div className="flex flex-row items-center justify-center gap-1">
           <Icon />

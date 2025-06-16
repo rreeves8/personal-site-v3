@@ -91,7 +91,7 @@ export default function About() {
         </React.Fragment>
       ))}
       <div className="flex flex-col space-y-6">
-        <h2 className="text-xl font-semibold">My Skills</h2>
+        <h2 className="text-xl font-semibold">Skills</h2>
         <div className="mx-12 sm:mx-0">
           <SkillsCarousel />
         </div>

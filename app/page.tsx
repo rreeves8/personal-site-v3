@@ -1,9 +1,9 @@
 export default function Home() {
   return (
-    <div>
+    <>
       <main className="pt-28">
-        <h1 className="text-xl inline">Hi I'm Magnus </h1>
-        <p className="pt-4 ">a Typescript pro and cloud expert</p>
+        <h1 className="text-3xl inline">Hi I'm Magnus </h1>
+        <p className="pt-4 ">a typescript pro and cloud expert</p>
       </main>
       <main className="pt-14 w-2/5">
         <p className="inline">I'm currently a </p>
@@ -13,7 +13,6 @@ export default function Home() {
           manage customer policies
         </p>
       </main>
-      <p className="pt-14 text-xl">My stack</p>
-    </div>
+    </>
   );
 }
