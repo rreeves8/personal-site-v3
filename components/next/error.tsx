@@ -59,7 +59,7 @@ export function Error(props: ErrorProps) {
     "An unexpected error has occurred";
 
   return (
-    <div style={styles.error}>
+    <div style={styles.error} className="flex flex-1 basis-full">
       <Head>
         <title>
           {statusCode

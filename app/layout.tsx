@@ -41,8 +41,8 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
       >
         <Nav />
-        <div className="flex-1 overflow-scroll flex flex-col">
-          <div className="w-4/5 mx-auto flex-1 flex">{children}</div>
+        <div className="flex-1 overflow-scroll flex flex-col basis-full">
+          <div className=" sm:max-w-4/5 mx-auto flex flex-1">{children}</div>
           <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto">
             <p>{new Date().getFullYear()} Magnus Reeves</p>
             <p>developed using NextJS</p>
@@ -69,7 +69,7 @@ export default function RootLayout({
 </div>; */
 }
 
-const routes = ["experience", "personal", "chess", "contact"];
+const routes = ["experience", "personal", "games", "contact"];
 
 function Nav() {
   return (
@@ -99,14 +99,12 @@ function Nav() {
           <SheetContent className="w-[400px] sm:w-[540px]">
             <SheetHeader>
               <SheetTitle>Navigation</SheetTitle>
-              <SheetDescription>
-                <div className="flex flex-col gap-1">
-                  {routes.map((r) => (
-                    <Route key={r}>{r}</Route>
-                  ))}
-                </div>
-              </SheetDescription>
             </SheetHeader>
+            <div className="flex flex-col">
+              {routes.map((r) => (
+                <Route key={r}>{r}</Route>
+              ))}
+            </div>
           </SheetContent>
         </Sheet>
       </div>
