@@ -42,7 +42,8 @@ export default function RootLayout({
       >
         <Nav />
         <div className="pt-14 flex-1 flex flex-col">
-          <div className="sm:max-w-4/5 mx-auto flex flex-col flex-1">{children}</div>
+          {children}
+
           <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto flex flex-row justify-between">
             <div className="flex flex-row gap-4">
               <Link

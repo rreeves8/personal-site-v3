@@ -7,7 +7,7 @@ export default function Chess() {
   const [chess] = useState(() => new ChessEngine());
 
   return (
-    <div className="flex flex-col">
+    <div className="sm:max-w-4/5 mx-auto flex flex-col flex-1">
       <h1 className="text-2xl font-medium text-center pt-4">Chess</h1>
       <div className="flex flex-col-reverse lg:flex-row pt-4">
         <ChessUI chess={chess} />

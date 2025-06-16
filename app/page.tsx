@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <div className="px-2 sm:px-0">
+    <div className="max-w-4/5 mx-auto flex flex-col flex-1">
       <main className=" pt-28">
         <h1 className="text-3xl inline">Hi I'm Magnus </h1>
         <p className="pt-4 ">a typescript pro and cloud expert</p>

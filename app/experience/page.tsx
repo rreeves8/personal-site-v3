@@ -83,19 +83,21 @@ function Section({
 
 export default function About() {
   return (
-    <section className="mx-2 sm:mx-0 flex flex-col space-y-8 sm:mt-6 mb-12">
-      {sections.map((props, i) => (
-        <React.Fragment key={i}>
-          <Section {...props} />
-          <div className="border-t bg-background" />
-        </React.Fragment>
-      ))}
-      <div className="flex flex-col space-y-6">
-        <h2 className="text-xl font-semibold">Skills</h2>
-        <div className="mx-12 sm:mx-0">
-          <SkillsCarousel />
+    <div className="max-w-4/5 mx-auto flex flex-col flex-1">
+      <section className="mx-2 sm:mx-0 flex flex-col space-y-8 sm:mt-6 mb-12">
+        {sections.map((props, i) => (
+          <React.Fragment key={i}>
+            <Section {...props} />
+            <div className="border-t bg-background" />
+          </React.Fragment>
+        ))}
+        <div className="flex flex-col space-y-6">
+          <h2 className="text-xl font-semibold">Skills</h2>
+          <div className="mx-12 sm:mx-0">
+            <SkillsCarousel />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
