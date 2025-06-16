@@ -122,7 +122,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
     if (!clicked && chess.turn() === "b") {
       setComputing(true);
       setTimeout(() => {
-        const { move } = minimax(chess, 5, "b");
+        const { move } = minimax(chess, 4, "b");
         chess.move(move!);
         setComputing(false);
       }, 400);

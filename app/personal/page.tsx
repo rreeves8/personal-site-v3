@@ -1,3 +1,3 @@
 export default function Personal() {
-  return <div>cool</div>;
+  return <div>under construction</div>;
 }

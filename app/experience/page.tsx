@@ -83,7 +83,7 @@ function Section({
 
 export default function About() {
   return (
-    <section className="p-6 sm:p-0 flex flex-col space-y-8 sm:mt-6 mb-12">
+    <section className="mx-2 sm:mx-0 flex flex-col space-y-8 sm:mt-6 mb-12">
       {sections.map((props, i) => (
         <React.Fragment key={i}>
           <Section {...props} />

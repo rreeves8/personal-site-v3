@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Chess as ChessUI } from "./(chess)/chess";
 import { Chess as ChessEngine, Move } from "chess.js";
 
@@ -12,10 +12,11 @@ export default function Chess() {
       <div className="flex flex-col-reverse lg:flex-row pt-4">
         <ChessUI chess={chess} />
         <div className="flex-1 basis-full flex flex-col p-4 items-center pt-7 ">
-          <p className="text-center max-w-3/4">
-            Single player chess! Try beating a Minimax algorithm I created using
-            alpha beta pruning and a React interface.
+          <p className="text-center justify-center max-w-3/4">
+            Single player chess, play against a chess algorithm I created using
+            minimax and a react interface.
           </p>
+          <p className="text-center justify-center max-w-3/4">algorithm</p>
         </div>
       </div>
     </div>
