@@ -43,7 +43,6 @@ export default function RootLayout({
         <Nav />
         <div className="pt-14 flex-1 flex flex-col">
           {children}
-
           <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto flex flex-row justify-between">
             <div className="flex flex-row gap-4">
               <Link

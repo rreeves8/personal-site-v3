@@ -205,23 +205,30 @@ function Cell({
       setDragPos([clientX - 32, clientY - 32]);
       setClicked([i, j, "mouse"]);
     },
-    []
+    [setDragPos, setClicked]
   );
 
-  const onMobileTouch = useCallback((e: TouchEvent) => {
-    e.preventDefault();
-    const { clientX, clientY } = e.touches[0];
-    setDragPos([clientX - 32, clientY - 32]);
-    setClicked([i, j, "touch"]);
-  }, []);
+  const onMobileTouch = useCallback(
+    (e: TouchEvent) => {
+      e.preventDefault();
+      console.log("clucked");
+      const { clientX, clientY } = e.touches[0];
+      setDragPos([clientX - 32, clientY - 32]);
+      setClicked([i, j, "touch"]);
+    },
+    [setDragPos, setClicked]
+  );
 
   useEffect(() => {
     if (ref.current && c && c.color === "w") {
       ref.current.addEventListener("touchstart", onMobileTouch, {
         passive: false,
       });
+
+      return () =>
+        ref.current?.removeEventListener("touchstart", onMobileTouch);
     }
-  }, [ref]);
+  }, [ref, onMobileTouch, c]);
 
   return (
     <Button
@@ -229,7 +236,7 @@ function Cell({
       key={j}
       disabled={disabled}
       property={`${i},${j}`}
-      className="p-2 w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 border-2"
+      className="p-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 border-2"
       style={style}
       onMouseDown={c && c.color === "w" ? onMove : undefined}
     >
