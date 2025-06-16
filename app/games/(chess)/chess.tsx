@@ -72,7 +72,6 @@ export function Chess({ chess }: { chess: ChessEngine }) {
     if (container.current) {
       if (clicked) {
         if (clicked[2] === "mouse") {
-          container.current.style.cursor = "none";
           window.addEventListener("mousemove", onMouseMove);
           window.addEventListener("mouseup", onMouseUp);
 
@@ -130,7 +129,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
   }, [clicked]);
 
   return (
-    <section ref={container} className="flex justify-center cursor noSelect">
+    <section ref={container} className="flex justify-center noSelect">
       <div className="flex flex-col gap-2 p-4 bg-white rounded">
         {board.map((row, i) => (
           <div key={i} className="flex flex-row gap-1 lg:gap-2">
@@ -236,7 +235,7 @@ function Cell({
       key={j}
       disabled={disabled}
       property={`${i},${j}`}
-      className="p-0 w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 border-2"
+      className="p-0 sm:p-2 w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 border-2"
       style={style}
       onMouseDown={c && c.color === "w" ? onMove : undefined}
     >

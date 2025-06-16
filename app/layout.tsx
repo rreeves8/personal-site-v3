@@ -49,12 +49,18 @@ export default function RootLayout({
                 href="https://www.linkedin.com/in/magnus-reeves/"
                 target="_blank"
                 className="link"
-                aria-label="GitHub repository"
+                aria-label="linkedin"
               >
                 <span className={`icon-[simple-icons--linkedin] size-6`} />
               </Link>
-
-              <span className={`icon-[simple-icons--github] size-6`} />
+              <Link
+                href="https://github.com/rreeves8"
+                target="_blank"
+                className="link"
+                aria-label="GitHub"
+              >
+                <span className={`icon-[simple-icons--github] size-6`} />
+              </Link>
             </div>
             <div className="text-right">
               <p className=" font-bold">
