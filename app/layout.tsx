@@ -130,11 +130,19 @@ function Nav() {
 
 function Resume() {
   return (
-    <Button variant="ghost" className="text-xl font-normal tracking-tight">
-      <div className="flex flex-row items-center gap-2">
+    <Button
+      variant="ghost"
+      className="text-xl font-normal tracking-tight"
+      asChild
+    >
+      <a
+        href="/Magnus_Resume.pdf"
+        className="flex flex-row items-center gap-2"
+        download="Magnus_Resume.pdf"
+      >
         resume
         <Download />
-      </div>
+      </a>
     </Button>
   );
 }
