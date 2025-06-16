@@ -9,7 +9,7 @@ export default function Chess() {
   return (
     <div className="flex flex-col">
       <h1 className="text-2xl font-medium text-center pt-4">Chess</h1>
-      <div className="flex flex-col lg:flex-row pt-4">
+      <div className="flex flex-col-reverse lg:flex-row pt-4">
         <ChessUI chess={chess} />
         <div className="flex-1 basis-full flex flex-col p-4 items-center pt-7 ">
           <p className="text-center max-w-3/4">

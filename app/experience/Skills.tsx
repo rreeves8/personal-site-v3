@@ -76,7 +76,9 @@ export const SkillsCarousel = () => {
                   <CardTitle>{skill.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription>{skill.description}</CardDescription>
+                  <CardDescription style={{ wordBreak: "break-word" }}>
+                    {skill.description}
+                  </CardDescription>
                 </CardContent>
                 <CardFooter className="mt-auto">
                   <div className="flex flex-wrap gap-2">

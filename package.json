@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@bprogress/next": "^3.2.12",
+    "@iconify/tailwind": "^1.2.0",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-separator": "^1.1.7",
@@ -30,6 +31,10 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@iconify-json/simple-icons": "^1.2.38",
+    "@iconify-json/tabler": "^1.2.19",
+    "@iconify/json": "^2.2.349",
+    "@iconify/tailwind4": "^1.0.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nprogress": "^0.2.3",

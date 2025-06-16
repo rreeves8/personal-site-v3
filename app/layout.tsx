@@ -41,21 +41,27 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
       >
         <Nav />
-        <div className="flex-1 overflow-scroll flex flex-col basis-full">
-          <div className=" sm:max-w-4/5 mx-auto flex flex-1">{children}</div>
-          <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto">
-            <p>{new Date().getFullYear()} Magnus Reeves</p>
-            <p>developed using NextJS</p>
-            <p>
-              <Link
-                href="https://github.com/rreeves8"
-                target="_blank"
-                className="link"
-                aria-label="GitHub repository"
-              >
-                View on GitHub
-              </Link>
-            </p>
+        <div className="flex-1 overflow-scroll flex flex-col">
+          <div className="sm:max-w-4/5 mx-auto flex flex-1">{children}</div>
+          <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto flex flex-row justify-between">
+            <div className="flex flex-row gap-4">
+              <span className={`icon-[simple-icons--linkedin] size-6`} />
+              <span className={`icon-[simple-icons--github] size-6`} />
+            </div>
+            <div className="text-right">
+              <p className=" font-bold">{new Date().getFullYear()} Magnus Reeves</p>
+              <p>Developed with NextJS</p>
+              <p>
+                <Link
+                  href="https://github.com/rreeves8"
+                  target="_blank"
+                  className="link text-blue-600"
+                  aria-label="GitHub repository"
+                >
+                  Source
+                </Link>
+              </p>
+            </div>
           </footer>
         </div>
       </body>
@@ -96,7 +102,7 @@ function Nav() {
               <Menu />
             </Button>
           </SheetTrigger>
-          <SheetContent className="w-[400px] sm:w-[540px]">
+          <SheetContent className="w-3/5">
             <SheetHeader>
               <SheetTitle>Navigation</SheetTitle>
             </SheetHeader>

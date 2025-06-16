@@ -83,7 +83,7 @@ function Section({
 
 export default function About() {
   return (
-    <section className="flex flex-col space-y-8 py-6">
+    <section className="p-6 sm:p-0 flex flex-col space-y-8 sm:mt-6 mb-12">
       {sections.map((props, i) => (
         <React.Fragment key={i}>
           <Section {...props} />
@@ -92,7 +92,9 @@ export default function About() {
       ))}
       <div className="flex flex-col space-y-6">
         <h2 className="text-xl font-semibold">My Skills</h2>
-        <SkillsCarousel />
+        <div className="mx-12 sm:mx-0">
+          <SkillsCarousel />
+        </div>
       </div>
     </section>
   );
