@@ -150,7 +150,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
       </div>
       {clicked && dragPos && (
         <div
-          className="absolute w-16 h-16"
+          className="absolute w-16 h-16 "
           style={{ left: `${dragPos[0]}px`, top: `${dragPos[1]}px` }}
         >
           <div className="flex justify-center items-center">
@@ -165,7 +165,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
                     "/" + Pieces[`${c.type}${c.color}` as keyof typeof Pieces]
                   }
                   alt=""
-                />
+              />
               );
             })()}
           </div>

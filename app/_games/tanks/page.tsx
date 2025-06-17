@@ -32,7 +32,7 @@ function Box(props: { position: [number, number, number] }) {
   );
 }
 
-export default function Pong() {
+export default function Tanks() {
   return (
     <div className="w-4/5 flex flex-1 justify-center mx-auto">
       <Canvas className=" ">

@@ -16,7 +16,7 @@ describe("minimax testing", () => {
     () => {
       let success = 0;
       let error = 0;
-      for (const [board, trueMove] of all.slice(0, 1)) {
+      for (const [board, trueMove] of all) {
         const c = new Chess(board);
 
         const { move } = minimax(c, 5, c.turn());

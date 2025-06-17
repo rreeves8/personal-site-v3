@@ -6,8 +6,8 @@ export default function Games() {
       <Link href="games/chess" className="link">
         chess
       </Link>
-      <Link href="games/pong" className="link">
-        pong
+      <Link href="_games/tanks" className="link">
+        tanks
       </Link>
     </div>
   );
