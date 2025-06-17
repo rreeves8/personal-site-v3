@@ -32,8 +32,8 @@ export function Chess({ chess }: { chess: ChessEngine }) {
 
   const container = useRef<HTMLDivElement>(null);
 
-  const onMouseMove = useCallback(({ clientX, clientY }: MouseEvent) => {
-    setDragPos([clientX - 32, clientY - 32]);
+  const onMouseMove = useCallback(({ pageX, pageY }: MouseEvent) => {
+    setDragPos([pageX - 32, pageY - 32]);
   }, []);
 
   const onMouseUp = useCallback(
@@ -47,8 +47,8 @@ export function Chess({ chess }: { chess: ChessEngine }) {
 
   const onTouchMove = useCallback((e: TouchEvent) => {
     e.preventDefault();
-    const { clientX, clientY } = e.touches[0];
-    setDragPos([clientX - 32, clientY - 32]);
+    const { pageX, pageY } = e.touches[0];
+    setDragPos([pageX - 32, pageY - 32]);
   }, []);
 
   const onTouchUp = useCallback(
@@ -200,8 +200,8 @@ function Cell({
   };
 
   const onMove: MouseEventHandler<HTMLButtonElement> = useCallback(
-    ({ clientX, clientY }) => {
-      setDragPos([clientX - 32, clientY - 32]);
+    ({ pageX, pageY }) => {
+      setDragPos([pageX - 32, pageY - 32]);
       setClicked([i, j, "mouse"]);
     },
     [setDragPos, setClicked]
@@ -211,8 +211,8 @@ function Cell({
     (e: TouchEvent) => {
       e.preventDefault();
       console.log("clucked");
-      const { clientX, clientY } = e.touches[0];
-      setDragPos([clientX - 32, clientY - 32]);
+      const { pageX, pageY } = e.touches[0];
+      setDragPos([pageX - 32, pageY - 32]);
       setClicked([i, j, "touch"]);
     },
     [setDragPos, setClicked]
