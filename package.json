@@ -30,10 +30,12 @@
     "lucide-react": "^0.511.0",
     "next": "^15.3.3",
     "nprogress": "^0.2.0",
+    "pathfinding": "^0.4.18",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.3.0",
     "three": "^0.177.0",
+    "uuid": "^11.1.0",
     "zustand": "^5.0.6"
   },
   "devDependencies": {
@@ -45,6 +47,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/nprogress": "^0.2.3",
+    "@types/pathfinding": "^0.1.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
