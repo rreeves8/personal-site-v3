@@ -101,7 +101,7 @@ export function Player({ pos, tankRef }: Props) {
     >
       <mesh>
         <boxGeometry args={[2.5, 1.3, 1]} />
-        <meshStandardMaterial color={"green"} />
+        <meshStandardMaterial color="blue" />
       </mesh>
     </RigidBody>
   );
