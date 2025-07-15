@@ -1,42 +1,58 @@
 "use client";
-import { useState } from "react";
-import { Chess as ChessUI } from "./(chess)/chess";
-import { Chess as ChessEngine, Move } from "chess.js";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+  CardFooter,
+} from "@/components/ui/card";
+import { Link, LoaderContext } from "@/components/ui/link";
+import { useContext } from "react";
 
-export default function Chess() {
-  const [chess] = useState(() => new ChessEngine());
+export default function Games() {
+  const { changeRoute } = useContext(LoaderContext);
 
   return (
-    <div className="sm:max-w-4/5 mx-auto flex flex-col flex-1">
-      <h1 className="text-2xl font-medium text-center pt-4">Chess</h1>
-      <div className="flex flex-col-reverse lg:flex-row pt-4">
-        <ChessUI chess={chess} />
-        <div className="flex-1 basis-full flex flex-col p-4 items-center pt-7 justify-between h-3/5 my-auto">
-          <p className="text-center justify-center max-w-3/4">
-            Single player chess, play against an algorithm I created using
-            minimax and a react interface.
-          </p>
-          <div className="flex flex-row items-center gap-6 justify-center pt-4">
-            <Link
-              href="https://github.com/rreeves8/personal-site-v3/blob/main/app/games/(chess)/minimax.ts"
-              target="_blank"
-              className="link"
-              aria-label="GitHub repository"
-            >
-              <span className="icon-[simple-icons--github] size-6" />
-            </Link>
-            <Link
-              href="https://github.com/rreeves8/personal-site-v3/blob/main/app/games/(chess)/minimax.ts"
-              target="_blank"
-              className="link text-blue-600"
-              aria-label="GitHub repository"
-            >
-              <p className="mb-2">Algorithm</p>
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className="w-4/5 mx-auto flex flex-col flex-1">
+      <main className="pt-4 text-center">
+        <h1 className="text-3xl inline">Games</h1>
+        <p className="pt-4 ">Check out some of the games I created</p>
+      </main>
+      <main className="pt-14 flex flex-row gap-6">
+        <Card onClick={() => changeRoute("games/chess")} className={className}>
+          <CardHeader>
+            <CardTitle>chess</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>
+              Play against a chess algorithm written using minimax. On a chess
+              board written using react.
+            </CardDescription>
+          </CardContent>
+          <CardFooter></CardFooter>
+        </Card>
+        <Card onClick={() => changeRoute("games/tanks")} className={className}>
+          <CardHeader>
+            <CardTitle>Tanks</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription>
+              Play a web replica of the Wii game Tanks, Written using the
+              Three.js library along with the react-fibre library for state
+              management.
+            </CardDescription>
+          </CardContent>
+          <CardFooter className="mt-auto">
+            <div className="flex flex-wrap gap-2">
+              {/* <span key={item.name} className={`${item.icon} size-6`} /> */}
+            </div>
+          </CardFooter>
+        </Card>
+      </main>
     </div>
   );
 }
+
+const className = "basis-1/2 hover:cursor-grab hover:bg-accent";

@@ -188,6 +188,21 @@ export function Floor() {
   );
 }
 
+export function BackGround() {
+  const colorMap = useLoader(TextureLoader, "/assets/sand.jpg");
+  const {
+    viewport: { width, height },
+  } = useThree();
+
+  useMemo(() => {
+    colorMap.wrapS = RepeatWrapping;
+    colorMap.wrapT = RepeatWrapping;
+    colorMap.repeat.set(width / 50, height / 50);
+  }, [colorMap]);
+
+  return <primitive attach="background" object={colorMap} />;
+}
+
 export function Lighting() {
   return (
     <>

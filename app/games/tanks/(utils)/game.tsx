@@ -1,16 +1,17 @@
 "use client";
-import { Suspense, useMemo, useRef } from "react";
-import { Html, useKeyboardControls } from "@react-three/drei";
+import { Suspense, useEffect, useMemo, useRef } from "react";
+import { Html, useKeyboardControls, KeyboardControls } from "@react-three/drei";
 import { Physics, RapierRigidBody } from "@react-three/rapier";
 import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { Player } from "./player";
 import { Bullets, useBulletStore } from "./bullets";
-import { Loading, Lighting, Floor, Wall, NavMesh } from "./map";
+import { Loading, Lighting, Floor, Wall, NavMesh, BackGround } from "./map";
 import { Explosions, useExplosionStore } from "./explosions";
 import { Ai } from "./Ai";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, Canvas } from "@react-three/fiber";
 import { Mesh } from "three";
+import { Spinner } from "@/components/ui/spinner";
 
 type GameADT = { map: 0; paused: boolean; over: "loose" | false };
 
@@ -33,17 +34,28 @@ export const useGameState = create<{
   clearGame: () => set((s) => ({ ...s, game: false })),
 }));
 
-export function Game({ game: { map } }: { game: GameADT }) {
+function useResetGame() {
+  const clearGame = useGameState((s) => s.clearGame);
+  const clearBullets = useBulletStore((s) => s.clear);
+  const clearExplosions = useExplosionStore((s) => s.clear);
+
+  return function stopGame() {
+    clearGame();
+    clearBullets();
+    clearExplosions();
+  };
+}
+
+function Game({ game: { map } }: { game: GameADT }) {
   const playerRef = useRef<RapierRigidBody>(null);
   const [tank, ai, walls] = useMemo(() => maps[map], [map]);
   const isPaused = useGameState((s) => s.game && s.game.paused);
   const pauseGame = useGameState((s) => s.pauseGame);
   const gameOver = useGameState((s) => s.game && s.game.over);
-  const clearGame = useGameState((s) => s.clearGame);
-  const clearBullets = useBulletStore((s) => s.clear);
-  const clearExplosions = useExplosionStore((s) => s.clear);
   const useEscape = useKeyboardControls((s) => s.esc);
   const navMeshRef = useRef<Mesh>(null);
+
+  const resetGame = useResetGame();
 
   useFrame(() => {
     if (useEscape && !isPaused) {
@@ -51,17 +63,9 @@ export function Game({ game: { map } }: { game: GameADT }) {
     }
   });
 
-  function stopGame() {
-    clearGame();
-    clearBullets();
-    clearExplosions();
-  }
-
   return (
     <Suspense fallback={<Loading />}>
-      <Lighting />
       <Physics paused={isPaused || gameOver !== false}>
-        <Floor />
         <NavMesh walls={walls} meshRef={navMeshRef} />
         {walls.map(([x, y, length, dir], i) => (
           <Wall key={i} pos={[x, y]} length={length} direction={dir} />
@@ -78,7 +82,7 @@ export function Game({ game: { map } }: { game: GameADT }) {
               <h1>Paused</h1>
               <div className="flex flex-row gap-3">
                 <Button onClick={() => pauseGame(false)}>Continue</Button>
-                <Button onClick={() => stopGame()} variant={"destructive"}>
+                <Button onClick={() => resetGame()} variant={"destructive"}>
                   Quit
                 </Button>
               </div>
@@ -91,7 +95,7 @@ export function Game({ game: { map } }: { game: GameADT }) {
           <div className="flex justify-center items-center h-full">
             <div className="bg-secondary rounded-2xl flex flex-col items-center justify-between p-6 gap-5 px-12">
               <h1>Game Over</h1>
-              <Button onClick={() => stopGame()}>Menu</Button>
+              <Button onClick={() => resetGame()}>Menu</Button>
             </div>
           </div>
         </Html>
@@ -125,3 +129,54 @@ const maps: Maps = [
     [...bounds, [10, 0, 12, "y"], [-10, 0, 12, "y"], [0, 0, 12, "x"]],
   ],
 ];
+
+export default function Tanks() {
+  const game = useGameState((s) => s.game);
+  const startGame = useGameState((s) => s.startGame);
+  const resetGame = useResetGame();
+
+  useEffect(() => {
+    return resetGame;
+  }, []);
+
+  return (
+    <KeyboardControls
+      map={[
+        { name: "forward", keys: ["ArrowUp", "w"] },
+        { name: "backward", keys: ["ArrowDown", "s"] },
+        { name: "left", keys: ["ArrowLeft", "a"] },
+        { name: "right", keys: ["ArrowRight", "d"] },
+        { name: "space", keys: ["Space"] },
+        { name: "esc", keys: ["Escape"] },
+      ]}
+    >
+      <Canvas
+        className="w-full h-full rounded-2xl border-2"
+        orthographic
+        camera={{
+          position: [0, 0, 100],
+          zoom: 30,
+        }}
+        fallback={<Spinner />}
+      >
+        <Suspense fallback={<Loading />}>
+          <Floor />
+          <Lighting />
+          {game ? (
+            <Game game={game} />
+          ) : (
+            <Html fullscreen>
+              <div className="flex justify-center items-center h-full">
+                <div className="bg-secondary rounded-2xl flex flex-col items-center justify-between  gap-5">
+                  <Button onClick={startGame} className="bg-green-600">
+                    Start!
+                  </Button>
+                </div>
+              </div>
+            </Html>
+          )}
+        </Suspense>
+      </Canvas>
+    </KeyboardControls>
+  );
+}

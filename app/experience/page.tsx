@@ -62,7 +62,7 @@ const skills = [
 
 const sections = [
   {
-    title: "Work Experience",
+    title: "Work",
     data: [
       {
         title: "Manulife Insurance | May 2023 - Present",
@@ -131,8 +131,12 @@ function Section({
             className="flex flex-col space-y-2 border-l-4 border-blue-700 pl-4"
           >
             <h3 className="text-md sm:text-xl font-semibold">{item.title}</h3>
-            <p className="text-sm sm:text-md text-muted-foreground">{item.subtitle}</p>
-            <p className="text-xs sm:text-sm text-muted-foreground">{item.description}</p>
+            <p className="text-sm sm:text-md text-muted-foreground">
+              {item.subtitle}
+            </p>
+            <p className="text-xs sm:text-sm text-muted-foreground">
+              {item.description}
+            </p>
           </div>
         ))}
       </div>
@@ -182,6 +186,9 @@ const SkillsCarousel = () => {
 export default function About() {
   return (
     <div className="max-w-10/12 sm:max-w-4/5 mx-auto flex flex-col gap-6 flex-1 py-4">
+      <main className="pt-4 text-center">
+        <h1 className="text-3xl inline">Experience</h1>
+      </main>
       {sections.map((props, i) => (
         <React.Fragment key={i}>
           <Section {...props} />

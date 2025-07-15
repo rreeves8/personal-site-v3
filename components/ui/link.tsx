@@ -1,6 +1,13 @@
 "use client";
 
-import React, { PropsWithChildren, useEffect, useOptimistic } from "react";
+import React, {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useContext,
+  useEffect,
+  useOptimistic,
+} from "react";
 import { startTransition } from "react";
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -27,12 +34,20 @@ function isModifiedEvent(event: React.MouseEvent): boolean {
   );
 }
 
-export const Link = React.forwardRef(function Link(
-  { href, children, replace, scroll, ...rest }: Parameters<typeof NextLink>[0],
-  ref: React.Ref<HTMLAnchorElement>
-) {
-  const router = useRouter();
+type LoaderContextADT = {
+  changeRoute: (
+    href: Parameters<typeof NextLink>[0]["href"],
+    scroll?: boolean,
+    replace?: boolean
+  ) => void;
+};
 
+export const LoaderContext = createContext<LoaderContextADT>(
+  {} as LoaderContextADT
+);
+
+export function LoadingProvider({ children }: React.PropsWithChildren) {
+  const router = useRouter();
   const [loading, setLoading] = useOptimistic(false);
 
   useEffect(() => {
@@ -43,23 +58,43 @@ export const Link = React.forwardRef(function Link(
     }
   }, [loading]);
 
+  const changeRoute = useCallback(
+    (
+      href: Parameters<typeof NextLink>[0]["href"],
+      scroll = false,
+      replace = false
+    ) => {
+      startTransition(() => {
+        setLoading(true);
+        const url = typeof href === "string" ? href : formatUrl(href);
+        if (replace) {
+          router.replace(url, { scroll });
+        } else {
+          router.push(url, { scroll });
+        }
+      });
+    },
+    []
+  );
+
+  return (
+    <LoaderContext.Provider value={{ changeRoute }}>
+      {children}
+    </LoaderContext.Provider>
+  );
+}
+
+export const Link = React.forwardRef(function Link(
+  { href, children, replace, scroll, ...rest }: Parameters<typeof NextLink>[0],
+  ref: React.Ref<HTMLAnchorElement>
+) {
+  const { changeRoute } = useContext(LoaderContext);
+
   return (
     <NextLink
       ref={ref}
       href={href}
-      onClick={(e) => {
-        if (isModifiedEvent(e)) return;
-        e.preventDefault();
-        startTransition(() => {
-          setLoading(true);
-          const url = typeof href === "string" ? href : formatUrl(href);
-          if (replace) {
-            router.replace(url, { scroll });
-          } else {
-            router.push(url, { scroll });
-          }
-        });
-      }}
+      onClick={() => changeRoute(href, scroll, replace)}
       {...rest}
     >
       {children}

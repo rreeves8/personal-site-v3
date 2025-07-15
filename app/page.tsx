@@ -19,7 +19,9 @@ export default function Home() {
       <div className="pt-14 flex flex-row items-center gap-6 mx-auto">
         <Construction className="w-24 h-24 text-yellow-400" />
         <div className="flex flex-col justify-between flex-1">
-          <h2 className="text-xl sm:text-3xl font-medium">Under construction</h2>
+          <h2 className="text-xl sm:text-3xl font-medium">
+            Under construction
+          </h2>
           <p>More content to come!</p>
         </div>
       </div>
