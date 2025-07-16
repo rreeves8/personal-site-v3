@@ -27,7 +27,7 @@ export function Chess() {
           </p>
           <div className="flex flex-row items-center gap-6 justify-center pt-4">
             <NextLink
-              href="https://github.com/rreeves8/personal-site-v3/blob/main/app/games/(chess)/minimax.ts"
+              href="https://github.com/rreeves8/personal-site-v3/blob/main/app/games/chess/(chess)/minimax.ts"
               target="_blank"
               className="link"
               aria-label="GitHub repository"
