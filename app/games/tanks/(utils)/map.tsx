@@ -13,6 +13,8 @@ import {
   ExtrudeGeometry,
   BufferGeometry,
   ShapeUtils,
+  Float32BufferAttribute,
+  DoubleSide,
 } from "three";
 import { Html } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
@@ -80,7 +82,7 @@ export function NavMesh({
     viewport: { width, height },
   } = useThree();
 
-  const { geometry, nodePositions } = useMemo(() => {
+  const { nodePositions } = useMemo(() => {
     const halfW = width / 2;
     const halfH = height / 2;
 
@@ -92,7 +94,7 @@ export function NavMesh({
     shape.lineTo(-halfW, halfH);
     shape.lineTo(-halfW, -halfH);
 
-    walls.forEach(([centroidX, centroidY, length, dir]) => {
+    walls.map(([centroidX, centroidY, length, dir]) => {
       const path = new Path();
       if (dir === "y") {
         path.moveTo(centroidX - 0.6 / 2, centroidY + length / 2);
@@ -108,14 +110,8 @@ export function NavMesh({
       shape.holes.push(path);
     });
 
-    const geometry = new ExtrudeGeometry(shape, {
-      depth: 0.1,
-      bevelEnabled: false,
-    });
-
-    geometry.computeVertexNormals();
-
     const outerPoints = shape.getPoints().map((p) => new Vector2(p.x, p.y));
+
     const holePolygons = shape.holes.map((h) =>
       h.getPoints().map((p) => new Vector2(p.x, p.y))
     );
@@ -138,6 +134,7 @@ export function NavMesh({
     }
 
     const nodePositions: [number, number][] = [];
+
     for (let x = -halfW; x < halfW; x += 0.5) {
       for (let y = -halfH; y < halfH; y += 0.5) {
         const point = new Vector2(x, y);
@@ -151,20 +148,62 @@ export function NavMesh({
       }
     }
 
-    return { geometry, nodePositions };
+    return { nodePositions };
   }, [width, height]);
 
+  const geometry = useMemo(() => {
+    const positions: number[] = [];
+    const indices: number[] = [];
+
+    // Build a lookup map to get index of a node at (x, y)
+    const nodeMap = new Map<string, number>();
+    nodePositions.forEach(([x, y], i) => {
+      nodeMap.set(`${x},${y}`, i);
+      positions.push(x, y, 0.11); // push vertex position
+    });
+
+    const step = 0.5;
+
+    // Connect each cell to form two triangles (if all 4 corners exist)
+    for (let [x, y] of nodePositions) {
+      const x1 = x + step;
+      const y1 = y + step;
+
+      const topLeft = nodeMap.get(`${x},${y}`);
+      const topRight = nodeMap.get(`${x1},${y}`);
+      const bottomLeft = nodeMap.get(`${x},${y1}`);
+      const bottomRight = nodeMap.get(`${x1},${y1}`);
+
+      if (
+        topLeft !== undefined &&
+        topRight !== undefined &&
+        bottomLeft !== undefined &&
+        bottomRight !== undefined
+      ) {
+        // Two triangles: TL, BL, BR and TL, BR, TR
+        indices.push(topLeft, bottomLeft, bottomRight);
+        indices.push(topLeft, bottomRight, topRight);
+      }
+    }
+
+    const geo = new BufferGeometry();
+    geo.setAttribute("position", new Float32BufferAttribute(positions, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+
+    return geo;
+  }, [nodePositions]);
+
   return (
-    // <mesh ref={meshRef} geometry={geometry}>
-    //   <meshStandardMaterial color="blue" transparent opacity={0.2} />
-    //   {nodePositions.map(([x, y], i) => (
-    //     <mesh key={i} position={[x, y, 0.11]}>
-    //       <sphereGeometry args={[0.05, 8, 8]} />
-    //       <meshStandardMaterial color="yellow" />
-    //     </mesh>
-    //   ))}
-    // </mesh>
-    <></>
+    <mesh ref={meshRef} geometry={geometry}>
+      {/* <meshStandardMaterial color="yellow" side={DoubleSide} /> */}
+      {/* {nodePositions.map(([x, y], i) => (
+        <mesh key={i} position={[x, y, 0.11]}>
+          <sphereGeometry args={[0.05, 8, 8]} />
+        
+        </mesh>
+      ))} */}
+    </mesh>
   );
 }
 

@@ -35,7 +35,7 @@ export function Chess() {
               <span className="icon-[simple-icons--github] size-6" />
             </NextLink>
             <NextLink
-              href="https://github.com/rreeves8/personal-site-v3/blob/main/app/games/(chess)/minimax.ts"
+              href="https://github.com/rreeves8/personal-site-v3/blob/main/app/games/chess/(chess)/minimax.ts"
               target="_blank"
               className="link text-blue-600"
               aria-label="GitHub repository"

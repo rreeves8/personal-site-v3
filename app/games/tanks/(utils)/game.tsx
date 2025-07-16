@@ -6,11 +6,11 @@ import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { Player } from "./player";
 import { Bullets, useBulletStore } from "./bullets";
-import { Loading, Lighting, Floor, Wall, NavMesh, BackGround } from "./map";
+import { Loading, Lighting, Floor, Wall, NavMesh } from "./map";
 import { Explosions, useExplosionStore } from "./explosions";
 import { Ai } from "./Ai";
 import { useFrame, Canvas } from "@react-three/fiber";
-import { Mesh } from "three";
+import { Box3, Mesh, Vector3 } from "three";
 import { Spinner } from "@/components/ui/spinner";
 
 type GameADT = { map: 0; paused: boolean; over: "loose" | false };
@@ -53,7 +53,6 @@ function Game({ game: { map } }: { game: GameADT }) {
   const pauseGame = useGameState((s) => s.pauseGame);
   const gameOver = useGameState((s) => s.game && s.game.over);
   const useEscape = useKeyboardControls((s) => s.esc);
-  const navMeshRef = useRef<Mesh>(null);
 
   const resetGame = useResetGame();
 
@@ -66,12 +65,11 @@ function Game({ game: { map } }: { game: GameADT }) {
   return (
     <Suspense fallback={<Loading />}>
       <Physics paused={isPaused || gameOver !== false}>
-        <NavMesh walls={walls} meshRef={navMeshRef} />
         {walls.map(([x, y, length, dir], i) => (
           <Wall key={i} pos={[x, y]} length={length} direction={dir} />
         ))}
         <Player pos={tank} tankRef={playerRef} />
-        <Ai initPos={ai} playerRef={playerRef} navMeshRef={navMeshRef} />
+        <Ai initPos={ai} playerRef={playerRef} walls={walls} />
         <Bullets />
         <Explosions />
       </Physics>
@@ -112,25 +110,33 @@ export type Maps = Array<
   ]
 >;
 
-const Y = 9.5;
-const X = 0;
+const screenAspect = 19.5 / 9; // L / H;
+
+const L = 45;
+const H = L / screenAspect;
 
 const bounds: Maps[number][2] = [
-  [0, Y, 36 + 0.6, "x"],
-  [18, 0, Y * 2 - 0.6, "y"],
-  [0, -Y, 36 + 0.6, "x"],
-  [-18, 0, Y * 2 - 0.6, "y"],
+  [0, H / 2, L + 0.6, "x"],
+  [L / 2, 0, H - 0.6, "y"],
+  [0, -(H / 2), L + 0.6, "x"],
+  [-(L / 2), 0, H - 0.6, "y"],
 ];
 
 const maps: Maps = [
   [
-    [15, 0],
-    [-15, 0],
-    [...bounds, [10, 0, 12, "y"], [-10, 0, 12, "y"], [0, 0, 12, "x"]],
+    [18, 0],
+    [-18, 0],
+    [...bounds, [13, 0, 12, "y"], [-13, 0, 12, "y"], [0, 0, 12, "x"]],
   ],
 ];
 
-export default function Tanks() {
+export default function Tanks({
+  width,
+  height,
+}: {
+  width: number;
+  height: number;
+}) {
   const game = useGameState((s) => s.game);
   const startGame = useGameState((s) => s.startGame);
   const resetGame = useResetGame();
@@ -138,6 +144,30 @@ export default function Tanks() {
   useEffect(() => {
     return resetGame;
   }, []);
+
+  const zoom = useMemo(
+    function getCamera() {
+      const x = L / 2;
+      const y = H / 2;
+      const boundingBox = new Box3().setFromPoints([
+        new Vector3(-x, y, 0),
+        new Vector3(-x, -y, 0),
+        new Vector3(x, -y, 0),
+        new Vector3(x, y, 0),
+      ]);
+
+      const s = boundingBox.getSize(new Vector3());
+
+      const aspect = width / height;
+
+      if (aspect > 1.0) {
+        return height / (s.y * 1.25);
+      } else {
+        return width / (s.x * 1.25);
+      }
+    },
+    [width, height]
+  );
 
   return (
     <KeyboardControls
@@ -154,8 +184,7 @@ export default function Tanks() {
         className="w-full h-full rounded-2xl border-2"
         orthographic
         camera={{
-          position: [0, 0, 100],
-          zoom: 30,
+          zoom: zoom,
         }}
         fallback={<Spinner />}
       >
