@@ -1,6 +1,6 @@
 import { Chess } from "chess.js";
 
-const PIECE_VALUES = {
+const BOARD_SCORES = {
   p: 10,
   n: 30,
   b: 30,
@@ -9,77 +9,65 @@ const PIECE_VALUES = {
   k: 900,
 };
 
-function evaluateBoard(chess: Chess, maximizingPlayer: "w" | "b"): number {
-  if (chess.isCheckmate())
-    return chess.turn() === maximizingPlayer ? -Infinity : Infinity;
-  if (chess.isDraw()) return 0;
-
+function boardScore(chess: Chess, p: "w" | "b") {
   return chess
     .board()
     .flat()
     .reduce((score, piece) => {
-      if (!piece) return score;
-      const val = PIECE_VALUES[piece.type];
-      return piece.color === maximizingPlayer ? score + val : score - val;
+      if (!piece) {
+        return score;
+      }
+      if (piece.color === p) {
+        return score + BOARD_SCORES[piece.type];
+      } else {
+        return score - BOARD_SCORES[piece.type];
+      }
     }, 0);
 }
 
 export function minimax(
   chess: Chess,
   depth: number,
-  mP: "w" | "b",
+  p: "w" | "b",
   alpha = -Infinity,
   beta = Infinity
 ): { score: number; move?: string } {
   if (chess.isCheckmate()) {
-    return { score: chess.turn() === mP ? -Infinity : Infinity };
-  }
-  if (chess.isDraw()) {
-    return { score: 0 };
-  }
-  if (depth === 0 || chess.isGameOver()) {
-    return { score: evaluateBoard(chess, mP) };
+    return { score: chess.turn() === p ? -Infinity : Infinity };
   }
 
   const moves = chess.moves();
-  const isMaximizing = chess.turn() === mP;
 
-  if (isMaximizing) {
-    let bestScore = -Infinity;
-    let bestMove = undefined;
-    for (const move of moves) {
-      chess.move(move);
-      const { score } = minimax(chess, depth - 1, mP, alpha, beta);
-      chess.undo();
+  if (depth === 0 || moves.length === 0) {
+    return { score: boardScore(chess, p) };
+  }
 
+  const isMaximizing = chess.turn() === p;
+
+  let bestScore = isMaximizing ? -Infinity : Infinity;
+  let bestMove: string | undefined;
+
+  for (const move of moves) {
+    chess.move(move);
+    const { score } = minimax(chess, depth - 1, p, alpha, beta);
+    chess.undo();
+
+    if (isMaximizing) {
       if (score > bestScore) {
         bestScore = score;
         bestMove = move;
       }
-
       alpha = Math.max(alpha, bestScore);
-      if (beta <= alpha) return { score: bestScore };
-    }
-
-    return { score: bestScore, move: bestMove };
-  } else {
-    let bestScore = Infinity;
-    let bestMove = undefined;
-
-    for (const move of moves) {
-      chess.move(move);
-      const { score } = minimax(chess, depth - 1, mP, alpha, beta);
-      chess.undo();
-
+    } else {
       if (score < bestScore) {
         bestScore = score;
         bestMove = move;
       }
-
       beta = Math.min(beta, bestScore);
-
-      if (beta <= alpha) return { score: bestScore };
     }
-    return { score: bestScore, move: bestMove };
+
+    if (beta <= alpha) break;
   }
+
+  return { score: bestScore, move: bestMove };
 }

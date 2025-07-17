@@ -118,7 +118,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
   }, [getCurrentHover, board]);
 
   useEffect(() => {
-    if (!clicked && chess.turn() === "b") {
+    if (!clicked && chess.turn() === "b" && !chess.isGameOver()) {
       setComputing(true);
       setTimeout(() => {
         const { move } = minimax(chess, 4, "b");
@@ -143,6 +143,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
                 clicked={clicked}
                 setDragPos={setDragPos}
                 setClicked={setClicked}
+                gameOver={chess.isGameOver()}
               />
             ))}
           </div>
@@ -165,7 +166,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
                     "/" + Pieces[`${c.type}${c.color}` as keyof typeof Pieces]
                   }
                   alt=""
-              />
+                />
               );
             })()}
           </div>
@@ -183,6 +184,7 @@ function Cell({
   computing,
   setDragPos,
   setClicked,
+  gameOver,
 }: {
   i: number;
   j: number;
@@ -191,6 +193,7 @@ function Cell({
   computing: boolean;
   setDragPos: (x: [number, number]) => void;
   setClicked: (x: [number, number, "mouse" | "touch"]) => void;
+  gameOver: boolean;
 }) {
   const ref = useRef<HTMLButtonElement>(null);
   const disabled = clicked || computing ? true : false;
