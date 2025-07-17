@@ -22,7 +22,7 @@ function boardScore(chess: Chess, p: "w" | "b") {
       } else {
         return score - BOARD_SCORES[piece.type];
       }
-    }, 0);
+    }, Math.random());
 }
 
 export function minimax(
