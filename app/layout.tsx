@@ -13,7 +13,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Link, LoadingProvider, Route } from "@/components/ui/link";
+import { LoadingProvider, Route } from "@/components/ui/link";
+import Link from "next/link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,7 +76,7 @@ export default function RootLayout({
                   <Link
                     href="https://github.com/rreeves8/personal-site-v3"
                     target="_blank"
-                    className="link text-blue-600"
+                    className=" text-blue-600"
                     aria-label="GitHub repository"
                   >
                     Source
