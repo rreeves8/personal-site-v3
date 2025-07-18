@@ -9,6 +9,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { LoaderContext } from "@/components/ui/link";
+import { Construction } from "lucide-react";
 import { useContext } from "react";
 
 export default function Games() {
@@ -23,7 +24,7 @@ export default function Games() {
       <main className="pt-14 flex flex-col sm:flex-row gap-6">
         <Card onClick={() => changeRoute("games/chess")} className={className}>
           <CardHeader>
-            <CardTitle>chess</CardTitle>
+            <CardTitle>chess </CardTitle>
           </CardHeader>
           <CardContent>
             <CardDescription>
@@ -35,7 +36,10 @@ export default function Games() {
         </Card>
         <Card onClick={() => changeRoute("games/tanks")} className={className}>
           <CardHeader>
-            <CardTitle>Tanks</CardTitle>
+            <CardTitle className="flex flex-row items-center gap-3">
+              <Construction className="w-8 h-8 text-yellow-400 " />
+              Tanks
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <CardDescription>
