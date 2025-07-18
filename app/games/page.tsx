@@ -24,7 +24,7 @@ export default function Games() {
       <main className="pt-14 flex flex-col sm:flex-row gap-6">
         <Card onClick={() => changeRoute("games/chess")} className={className}>
           <CardHeader>
-            <CardTitle>chess </CardTitle>
+            <CardTitle>Chess </CardTitle>
           </CardHeader>
           <CardContent>
             <CardDescription>
