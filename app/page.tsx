@@ -1,28 +1,49 @@
-import { Construction } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="max-w-4/5 mx-auto flex flex-col flex-1">
-      <main className="pt-28">
-        <h1 className="text-3xl inline">Hi I'm Magnus </h1>
-        <p className="pt-4 ">a typescript pro and cloud expert</p>
-      </main>
-      <main className="pt-14 w-4/5 sm:w-2/5">
-        <p className="inline">I'm currently a </p>
-        <p className="inline font-bold">Full Stack Engineer </p>
-        <p className="inline">
-          at Manulife, where I build web applications for insurance advisors to
-          manage customer policies
-        </p>
-      </main>
-
-      <div className="pt-14 flex flex-row items-center gap-6 mx-auto">
-        <Construction className="w-24 h-24 text-yellow-400" />
-        <div className="flex flex-col justify-between flex-1">
-          <h2 className="text-xl sm:text-3xl font-medium">
-            Under construction
-          </h2>
-          <p>More content to come!</p>
+    <div className="px-10 xl:px-0 xl:max-w-4/5 mx-auto flex flex-col flex-1 pt-10">
+      <div className="flex flex-col lg:flex-row justify-between lg:pt-18">
+        <div className="basis-1/3">
+          <main>
+            <h1 className="text-3xl inline">Hi I'm Magnus </h1>
+            <h2 className="pt-6 text-xl">Welcome to my website!</h2>
+          </main>
+          <div className="rounded-2xl overflow-hidden h-fit mt-6 lg:hidden">
+            <Image
+              src="/me.png"
+              alt="Magnus"
+              className="object-contain w-full h-auto scale-x-[-1]"
+              width={500}
+              height={500}
+            />
+          </div>
+          <main className="pt-20">
+            <p className="inline text-xl">I'm a </p>
+            <p className="inline font-bold text-xl">Full Stack Engineer </p>
+            <p className="inline text-xl">at </p>
+            <p className="inline font-bold text-xl">Manulife </p>
+            <p className="inline text-xl">
+              insurance where I build web applications for advisors and clients
+            </p>
+          </main>
+          <main className="py-14">
+            <p className="inline text-xl">Checkout the </p>
+            <p className="text-xl hidden lg:inline">navbar </p>
+            <p className="text-xl inline lg:hidden">sidebar </p>
+            <p className="inline text-xl">
+              to learn more about me, or try one of the games I've created!
+            </p>
+          </main>
+        </div>
+        <div className="rounded-2xl overflow-hidden basis-7/12 h-fit hidden lg:block">
+          <Image
+            src="/me.png"
+            alt="Magnus"
+            className="object-contain w-full h-auto scale-x-[-1]"
+            width={500}
+            height={500}
+          />
         </div>
       </div>
     </div>

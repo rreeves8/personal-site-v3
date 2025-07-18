@@ -3,7 +3,7 @@
 import { Link } from "@/components/ui/link";
 import { Spinner } from "@/components/ui/spinner";
 import dynamic from "next/dynamic";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 
 const Game = dynamic(() => import("./(utils)/game"), {
   ssr: false,
@@ -18,6 +18,10 @@ function GameContainer({ divRef }: { divRef: HTMLDivElement }) {
   const { height, width } = useMemo(() => {
     return divRef.getBoundingClientRect();
   }, [divRef]);
+
+  if (width < 640) {
+    return <div>Laptop only</div>;
+  }
 
   return <Game height={height} width={width} />;
 }

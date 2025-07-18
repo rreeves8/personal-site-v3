@@ -90,7 +90,7 @@ export default function RootLayout({
   );
 }
 
-const routes = ["experience", "personal", "games", "contact"];
+const routes = ["experience", "personal", "games", "socials"];
 
 function Nav() {
   return (
@@ -113,13 +113,13 @@ function Nav() {
         </div>
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant={"secondary"} className=" hover:cursor-pointer">
+            <Button variant={"secondary"} className="hover:cursor-pointer">
               <Menu />
             </Button>
           </SheetTrigger>
           <SheetContent className="w-3/5">
             <SheetHeader>
-              <SheetTitle>Navigation</SheetTitle>
+              <SheetTitle></SheetTitle>
             </SheetHeader>
             <div className="flex flex-col">
               {routes.map((r) => (

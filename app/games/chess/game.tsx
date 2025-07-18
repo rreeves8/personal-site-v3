@@ -11,7 +11,7 @@ export function Chess() {
 
   return (
     <div className="sm:max-w-4/5 mx-auto flex flex-col flex-1">
-      <div className="pt-4 flex flex-row justify-between">
+      <div className="pt-4 flex flex-row justify-between px-7">
         <Link href="/games" className="text-blue-600">
           back
         </Link>

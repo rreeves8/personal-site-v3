@@ -21,7 +21,7 @@ const skills = [
   {
     title: "Web Development",
     description:
-      "I am an experienced web developer using modern technologies and frameworks.",
+      "Full stack web development using modern technologies and frameworks.",
     items: [
       { name: "Typescript", icon: "icon-[simple-icons--typescript]" },
       { name: "Next.js", icon: "icon-[simple-icons--nextdotjs]" },
@@ -30,8 +30,7 @@ const skills = [
   },
   {
     title: "UI/UX Design for Web & Apps",
-    description:
-      "I have experience creating responsive UI/UX web and mobile applications.",
+    description: "Creating responsive UI/UX web and mobile applications.",
     items: [
       { name: "React", icon: "icon-[simple-icons--react]" },
       { name: "Tailwind CSS", icon: "icon-[simple-icons--tailwindcss]" },
@@ -39,8 +38,7 @@ const skills = [
   },
   {
     title: "Backend Development",
-    description:
-      "I have experience building and maintaining backend services and APIs.",
+    description: "Building and maintaining backend services/APIs",
     items: [
       { name: "Express", icon: "icon-[simple-icons--express]" },
       { name: "Post Man", icon: "icon-[simple-icons--postman]" },
@@ -51,7 +49,7 @@ const skills = [
   {
     title: "Cloud Infrastructure",
     description:
-      "I have experience building and maintaining backend services and APIs.",
+      "Provisioning cloud resources with Terraform, for both AWS and Azure.",
     items: [
       { name: "Terraform", icon: "icon-[simple-icons--terraform]" },
       { name: "AWS", icon: "icon-[simple-icons--amazonwebservices]" },
@@ -122,25 +120,28 @@ function Section({
   }>;
 }) {
   return (
-    <div className="flex flex-col gap-4">
-      <h2 className="text-lg sm:text-xl font-semibold">{title}</h2>
-      <div className="flex flex-col gap-3">
-        {data.map((item) => (
-          <div
-            key={item.title}
-            className="flex flex-col space-y-2 border-l-4 border-blue-700 pl-4"
-          >
-            <h3 className="text-md sm:text-xl font-semibold">{item.title}</h3>
-            <p className="text-sm sm:text-md text-muted-foreground">
-              {item.subtitle}
-            </p>
-            <p className="text-xs sm:text-sm text-muted-foreground">
-              {item.description}
-            </p>
-          </div>
-        ))}
+    <>
+      <div className="flex flex-col gap-4">
+        <h2 className="text-lg sm:text-xl font-semibold">{title}</h2>
+        <div className="flex flex-col gap-3">
+          {data.map((item) => (
+            <div
+              key={item.title}
+              className="flex flex-col space-y-2 border-l-4 border-blue-700 pl-4"
+            >
+              <h3 className="text-md sm:text-xl font-semibold">{item.title}</h3>
+              <p className="text-sm sm:text-md text-muted-foreground font-bold">
+                {item.subtitle}
+              </p>
+              <p className="text-xs sm:text-sm text-muted-foreground">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+      <div className="border-t bg-background" />
+    </>
   );
 }
 
@@ -190,12 +191,9 @@ export default function About() {
         <h1 className="text-3xl inline">Experience</h1>
       </main>
       {sections.map((props, i) => (
-        <React.Fragment key={i}>
-          <Section {...props} />
-          <div className="border-t bg-background" />
-        </React.Fragment>
+        <Section key={i} {...props} />
       ))}
-      <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-6 mb-15">
         <h2 className="text-xl font-semibold">Skills</h2>
         <SkillsCarousel />
       </div>

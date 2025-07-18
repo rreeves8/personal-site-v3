@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+
 import {
   Card,
   CardHeader,
@@ -8,7 +8,7 @@ import {
   CardDescription,
   CardFooter,
 } from "@/components/ui/card";
-import { Link, LoaderContext } from "@/components/ui/link";
+import { LoaderContext } from "@/components/ui/link";
 import { useContext } from "react";
 
 export default function Games() {
@@ -20,7 +20,7 @@ export default function Games() {
         <h1 className="text-3xl inline">Games</h1>
         <p className="pt-4 ">Check out some of the games I created</p>
       </main>
-      <main className="pt-14 flex flex-row gap-6">
+      <main className="pt-14 flex flex-col sm:flex-row gap-6">
         <Card onClick={() => changeRoute("games/chess")} className={className}>
           <CardHeader>
             <CardTitle>chess</CardTitle>
