@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
+import { FileUser } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
@@ -44,17 +45,25 @@ export default function Home() {
               to learn more about me, or try one of the games I've created!
             </p>
           </main>
-          <div className="flex flex-col w-fit h-fit items-center pb-8">
-            <Link href={"/games/chess"}>
-              <Image
-                src="/imgs/knight-black.png"
-                alt="Magnus"
-                className="object-contain"
-                width={36}
-                height={36}
-              />
-            </Link>
-            chess
+          <div className="flex flex-row gap-6">
+            <div className="flex flex-col w-fit h-fit items-center pb-8">
+              <Link href={"/games/chess"}>
+                <Image
+                  src="/imgs/knight-black.png"
+                  alt="Magnus"
+                  className="object-contain"
+                  width={36}
+                  height={36}
+                />
+              </Link>
+              chess
+            </div>
+            <div className="flex flex-col w-fit h-fit items-center pb-8">
+              <Link href={"/experience"}>
+                <FileUser width={36} height={36} />
+              </Link>
+              portfolio
+            </div>
           </div>
         </div>
         <div className="hidden lg:block basis-3/6 rounded-xl overflow-clip h-fit my-auto">
