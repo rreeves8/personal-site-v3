@@ -6,7 +6,7 @@ import { create } from "zustand";
 import { Button } from "@/components/ui/button";
 import { Player } from "./player";
 import { Bullets, useBulletStore } from "./bullets";
-import { Loading, Lighting, Floor, Wall, NavMesh } from "./map";
+import { Loading, Lighting, Floor, Wall } from "./map";
 import { Explosions, useExplosionStore } from "./explosions";
 import { Ai } from "./Ai";
 import { useFrame, Canvas } from "@react-three/fiber";

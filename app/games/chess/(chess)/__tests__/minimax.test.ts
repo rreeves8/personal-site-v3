@@ -25,8 +25,6 @@ describe("minimax testing", () => {
           .moves({ verbose: true })
           .find((m) => m.san === move!);
 
-        console.log()
-
         if (trueMove === computerMove?.lan) {
           success++;
         } else {
