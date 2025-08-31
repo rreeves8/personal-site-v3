@@ -142,9 +142,9 @@ function Resume() {
       asChild
     >
       <a
-        href="/Magnus_Resume.pdf"
+        href="/Resume.pdf"
         className="flex flex-row items-center gap-2"
-        download="Magnus_Resume.pdf"
+        download="Resume.pdf"
       >
         resume
         <Download />

@@ -1,3 +1,4 @@
+import { FileUser } from "lucide-react";
 import Link from "next/link";
 
 export default function Contact() {
@@ -25,6 +26,20 @@ export default function Contact() {
         >
           <span className={`icon-[simple-icons--github] size-24 `} />
         </Link>
+      </div>
+      <div className="flex flex-row gap-8 mt-8 mt-24">
+        <div className="flex flex-col w-fit h-fit items-center pb-8">
+          <Link href={"/Resume.pdf"}>
+            <FileUser className="size-24" />
+          </Link>
+          resume
+        </div>
+        <div className="flex flex-col w-fit h-fit items-center pb-8">
+          <Link href={"/Cover_Letter.pdf"}>
+            <FileUser className="size-24" />
+          </Link>
+          cover letter
+        </div>
       </div>
     </div>
   );
