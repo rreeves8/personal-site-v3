@@ -121,7 +121,11 @@ export function Chess({ chess }: { chess: ChessEngine }) {
     if (!clicked && chess.turn() === "b" && !chess.isGameOver()) {
       setComputing(true);
       setTimeout(() => {
+        const t = new Date();
         const { move } = minimax(chess, 4, "b");
+        const e = new Date();
+
+        console.log("Computed in:", (e.getTime() - t.getTime()) / 1000, "s");
         chess.move(move!);
         setComputing(false);
       }, 400);
