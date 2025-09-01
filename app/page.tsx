@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "@/components/ui/link";
-import { FileUser } from "lucide-react";
+import { FileUser, SquareTerminal } from "lucide-react";
 import Image from "next/image";
 
 export default function Home() {
@@ -47,16 +47,10 @@ export default function Home() {
           </main>
           <div className="flex flex-row gap-6">
             <div className="flex flex-col w-fit h-fit items-center pb-8">
-              <Link href={"/games/chess"}>
-                <Image
-                  src="/imgs/knight-black.png"
-                  alt="Magnus"
-                  className="object-contain"
-                  width={36}
-                  height={36}
-                />
+              <Link href={"/projects"}>
+                <SquareTerminal width={36} height={36} />
               </Link>
-              chess
+              projects
             </div>
             <div className="flex flex-col w-fit h-fit items-center pb-8">
               <Link href={"/experience"}>

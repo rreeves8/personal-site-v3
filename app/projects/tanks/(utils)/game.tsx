@@ -181,7 +181,7 @@ export default function Tanks({
       ]}
     >
       <Canvas
-        className="w-full h-full rounded-2xl border-2"
+        className="w-full h-full"
         orthographic
         camera={{
           zoom: zoom,

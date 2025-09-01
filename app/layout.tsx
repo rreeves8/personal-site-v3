@@ -91,7 +91,7 @@ export default function RootLayout({
   );
 }
 
-const routes = ["experience", "personal", "games", "socials"];
+const routes = ["experience", "personal", "projects", "socials"];
 
 function Nav() {
   return (

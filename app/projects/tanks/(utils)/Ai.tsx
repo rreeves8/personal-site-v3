@@ -13,7 +13,6 @@ import {
 } from "three";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
 import { Line } from "@react-three/drei";
-
 import PF from "pathfinding";
 import { Maps } from "./game";
 

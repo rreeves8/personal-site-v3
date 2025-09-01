@@ -12,6 +12,7 @@ import { minimax } from "./minimax";
 import Image from "next/image";
 import { Pieces } from "./img.const";
 import { Chess as ChessEngine, Move, Piece } from "chess.js";
+import { minimaxC } from "./c++";
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
@@ -120,42 +121,40 @@ export function Chess({ chess }: { chess: ChessEngine }) {
   useEffect(() => {
     if (!clicked && chess.turn() === "b" && !chess.isGameOver()) {
       setComputing(true);
-      setTimeout(() => {
-        const t = new Date();
-        const { move } = minimax(chess, 4, "b");
-        const e = new Date();
+      setTimeout(async () => {
+        const move = await minimaxC(chess, "b", 7);
 
-        console.log("Computed in:", (e.getTime() - t.getTime()) / 1000, "s");
-        chess.move(move!);
+        chess.move(move);
         setComputing(false);
       }, 400);
     }
   }, [clicked]);
 
   return (
-    <section ref={container} className="flex justify-center noSelect">
-      <div className="flex flex-col gap-2 p-4 bg-white rounded">
-        {board.map((row, i) => (
-          <div key={i} className="flex flex-row gap-1 lg:gap-2">
-            {row.map((c, j) => (
-              <Cell
-                key={`${i}${j}`}
-                c={c}
-                i={board.length - i - 1}
-                j={j}
-                computing={computing}
-                clicked={clicked}
-                setDragPos={setDragPos}
-                setClicked={setClicked}
-                gameOver={chess.isGameOver()}
-              />
-            ))}
-          </div>
-        ))}
+    <section
+      ref={container}
+      className="flex flex-1 h-full w-full min-h-0 min-w-0 p-2"
+    >
+      <div className="grid grid-cols-8 grid-rows-8 gap-0 w-full h-full bg-white rounded">
+        {board.flatMap((row, i) =>
+          row.map((c, j) => (
+            <Cell
+              key={`${i}${j}`}
+              c={c}
+              i={board.length - i - 1}
+              j={j}
+              computing={computing}
+              clicked={clicked}
+              setDragPos={setDragPos}
+              setClicked={setClicked}
+              gameOver={chess.isGameOver()}
+            />
+          ))
+        )}
       </div>
       {clicked && dragPos && (
         <div
-          className="absolute w-16 h-16 "
+          className="absolute w-10 h-10"
           style={{ left: `${dragPos[0]}px`, top: `${dragPos[1]}px` }}
         >
           <div className="flex justify-center items-center">
@@ -242,14 +241,14 @@ function Cell({
       key={j}
       disabled={disabled}
       property={`${i},${j}`}
-      className="p-0 sm:p-2 w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 border-2"
+      className="p-0 border-2 w-full h-full"
       style={style}
       onMouseDown={c && c.color === "w" ? onMove : undefined}
     >
       {c && (
         <div className="relative w-full h-full">
           <Image
-            className=" object-contain"
+            className="object-contain p-2"
             fill
             property={`${i},${j}`}
             src={"/" + Pieces[`${c.type}${c.color}` as keyof typeof Pieces]}
