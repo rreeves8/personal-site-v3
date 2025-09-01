@@ -3,7 +3,7 @@
 import { Spinner } from "@/components/ui/spinner";
 import dynamic from "next/dynamic";
 
-const Projects = dynamic(() => import("./projects"), {
+const Projects = dynamic(() => import("./(projects)/projects"), {
   ssr: false,
   loading: () => (
     <div className="flex justify-center items-center">

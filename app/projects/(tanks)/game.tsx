@@ -1,6 +1,6 @@
 "use client";;
 import { useMemo, useState } from "react";
-import Game from "./(utils)/game";
+import Game from "./engine/game";
 
 function GameContainer({ divRef }: { divRef: HTMLDivElement }) {
   const { height, width } = useMemo(() => {

@@ -8,11 +8,24 @@ import {
   useRef,
   useState,
 } from "react";
-import { minimax } from "./minimax";
 import Image from "next/image";
-import { Pieces } from "./img.const";
 import { Chess as ChessEngine, Move, Piece } from "chess.js";
 import { minimaxC } from "./c++";
+
+export const Pieces = {
+  kw: "imgs/king-white.png",
+  kb: "imgs/king-black.png",
+  qw: "imgs/queen-white.png",
+  qb: "imgs/queen-black.png",
+  bw: "imgs/bishop-white.png",
+  bb: "imgs/bishop-black.png",
+  rw: "imgs/castle-white.png",
+  rb: "imgs/castle-black.png",
+  pw: "imgs/pawn-white.png",
+  pb: "imgs/pawn-black.png",
+  nw: "imgs/knight-white.png",
+  nb: "imgs/knight-black.png",
+};
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz".split("");
 
@@ -20,7 +33,9 @@ function ijToAj(i: number, j: number) {
   return `${alphabet[j]}${i + 1}`;
 }
 
-export function Chess({ chess }: { chess: ChessEngine }) {
+export function Chess() {
+  const [chess] = useState(() => new ChessEngine());
+
   const board = chess.board();
   const [clicked, setClicked] = useState<
     [number, number, "mouse" | "touch"] | null
@@ -33,8 +48,8 @@ export function Chess({ chess }: { chess: ChessEngine }) {
 
   const container = useRef<HTMLDivElement>(null);
 
-  const onMouseMove = useCallback(({ pageX, pageY }: MouseEvent) => {
-    setDragPos([pageX - 32, pageY - 32]);
+  const onMouseMove = useCallback(({ screenX, screenY }: MouseEvent) => {
+    setDragPos([screenX, screenY]);
   }, []);
 
   const onMouseUp = useCallback(
@@ -122,7 +137,7 @@ export function Chess({ chess }: { chess: ChessEngine }) {
     if (!clicked && chess.turn() === "b" && !chess.isGameOver()) {
       setComputing(true);
       setTimeout(async () => {
-        const move = await minimaxC(chess, "b", 7);
+        const move = await minimaxC(chess, "b", 5);
 
         chess.move(move);
         setComputing(false);
@@ -206,8 +221,8 @@ function Cell({
   };
 
   const onMove: MouseEventHandler<HTMLButtonElement> = useCallback(
-    ({ pageX, pageY }) => {
-      setDragPos([pageX - 32, pageY - 32]);
+    ({ screenX, screenY }) => {
+      setDragPos([screenX, screenY]);
       setClicked([i, j, "mouse"]);
     },
     [setDragPos, setClicked]

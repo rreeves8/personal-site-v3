@@ -1,14 +1,14 @@
 "use client";
 
 import { Rnd } from "react-rnd";
-import { Tanks } from "./tanks/game";
+import { Tanks } from "../(tanks)/game";
 import { create } from "zustand";
 import { v4 } from "uuid";
 import Image from "next/image";
 import { useClickOutside, useHover } from "@/components/hooks";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Chess } from "./chess/game";
+import { Chess } from "../(chess)/chess";
 
 type Window = { type: "tanks" | "chess"; id: string };
 
