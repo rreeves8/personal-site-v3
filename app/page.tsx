@@ -20,7 +20,7 @@ export default function Home() {
               <p className="inline font-bold ">Manulife </p>
               <p className="inline ">
                 insurance where I build web applications for advisors and
-                clients
+                clients. I'm currently working for the AI operations division.
               </p>
             </main>
           </div>
