@@ -65,14 +65,24 @@ const sections = [
       {
         title: "Manulife Insurance | May 2023 - Present",
         subtitle: "Full Stack Software Engineer",
-        description:
-          "I built internal web applications using Typescript, React, Remix, Node.js, and SQL, enabling 4,000+ insurance advisors to track payment exceptions and policy changes daily.",
+        description: [
+          "Built and scaled secure web applications using Typescript, React, Node.js, and SQL. Enabling 4,000+ insurance advisors to manage customer policy information and process over 50 million dollars in payments.",
+          "Improved React performance by 60% through implementing Remix’s sever side rendering framework.",
+          "Architected a centralized backend hub with a JSON rules engine, streamlining processing for key operations and reducing integration complexity.",
+          "Provisioned infrastructure on Azure using Terraform, deploying AKS clusters, load balancers and Function Apps.",
+          "Enhanced security hardening by configuring Azure VNets to restrict network access and integrating Azure AD SSO for authentication, enforcing corporate web-security standards.",
+          "Spearheaded the integration of Agentic AI prompting to automate business-rule execution, reducing manual coding and accelerating development workflows by 80%.",
+          "Created an intelligent document processor using Python and OpenAI for receiving policy change forms from customers, replacing manual advisor form processing and improving business operations.",
+        ],
       },
       {
         title: "Console One | May 2022 - September 2022",
         subtitle: "Front End Software Engineer",
-        description:
-          "Working at a small startup, I created a website for front-end application to compose and deploy AWS websites",
+        description: [
+          "Built a browser-based IDE to write and deploy React apps on AWS lambda and s3, enabling faster website deployment.",
+          "Enabled seamless code editing, version control, and deployments by writing stylish web components in React and integrating them with backend API’s using hooks. Also wrote frontend unit tests using Jest and e2e integration tests with cypress.",
+          "Scaled from 0 to 100 users and worked alongside clients to receive feedback and improve application quality.",
+        ],
       },
     ],
   },
@@ -115,7 +125,7 @@ function Section({
   title: string;
   data: Array<{
     subtitle: string;
-    description: string | React.ReactNode;
+    description: string | string[];
     title: string;
   }>;
 }) {
@@ -130,12 +140,25 @@ function Section({
               className="flex flex-col space-y-2 border-l-4 border-blue-700 pl-4"
             >
               <h3 className="text-md sm:text-xl font-semibold">{item.title}</h3>
-              <p className="text-sm sm:text-md text-muted-foreground font-bold">
+              <p className="text-sm sm:text-md font-semibold">
                 {item.subtitle}
               </p>
-              <p className="text-xs sm:text-sm text-muted-foreground">
-                {item.description}
-              </p>
+              {typeof item.description === "object" ? (
+                item.description.map((m, i) => (
+                  <div key={i} className="flex flex-row items-start gap-2">
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      •
+                    </p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
+                      {m}
+                    </p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-xs sm:text-sm text-muted-foreground">
+                  {item.description}
+                </p>
+              )}
             </div>
           ))}
         </div>
