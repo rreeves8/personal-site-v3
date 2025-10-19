@@ -20,20 +20,6 @@ NProgress.configure({
   showSpinner: false,
 });
 
-// Copied from  https://github.com/vercel/next.js/blob/canary/packages/next/src/client/link.tsx#L180-L191
-function isModifiedEvent(event: React.MouseEvent): boolean {
-  const eventTarget = event.currentTarget as HTMLAnchorElement | SVGAElement;
-  const target = eventTarget.getAttribute("target");
-  return (
-    (target && target !== "_self") ||
-    event.metaKey ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    event.altKey || // triggers resource download
-    (event.nativeEvent && event.nativeEvent.which === 2)
-  );
-}
-
 type LoaderContextADT = {
   changeRoute: (
     href: Parameters<typeof NextLink>[0]["href"],
