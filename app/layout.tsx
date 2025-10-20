@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "nprogress/nprogress.css";
 import { Button } from "@/components/ui/button";
-import { Download, Menu } from "lucide-react";
+import { Download, FileUser, Mail, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sheet,
@@ -15,6 +15,11 @@ import {
 } from "@/components/ui/sheet";
 import { LoadingProvider, Route } from "@/components/ui/link";
 import Link from "next/link";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,30 +47,55 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}
-      >
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col h-screen`}>
         <LoadingProvider>
           <Nav />
           <div className="pt-14 flex-1 flex flex-col">
             {children}
             <footer className="w-4/5 border-t bg-background mx-auto py-4 mt-auto flex flex-row justify-between">
-              <div className="flex flex-row gap-4">
-                <Link
-                  href="https://www.linkedin.com/in/magnus-reeves/"
-                  target="_blank"
-                  className="link"
-                  aria-label="linkedin"
-                >
-                  <span className={`icon-[simple-icons--linkedin] size-6`} />
-                </Link>
-                <Link
-                  href="https://github.com/rreeves8"
-                  target="_blank"
-                  className="link"
-                  aria-label="GitHub"
-                >
-                  <span className={`icon-[simple-icons--github] size-6`} />
-                </Link>
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-row gap-4">
+                  <Link
+                    href="https://www.linkedin.com/in/magnus-reeves/"
+                    target="_blank"
+                    className="link"
+                    aria-label="linkedin">
+                    <span className={`icon-[simple-icons--linkedin] size-6`} />
+                  </Link>
+                  <Link
+                    href="https://github.com/rreeves8"
+                    target="_blank"
+                    className="link"
+                    aria-label="GitHub">
+                    <span className={`icon-[simple-icons--github] size-6`} />
+                  </Link>
+                </div>
+                <div className="flex flex-row gap-4">
+                  <div className="flex flex-col w-fit h-fit items-center pb-8">
+                    <HoverCard openDelay={0} closeDelay={0}>
+                      <HoverCardTrigger asChild>
+                        <Link href={"/Resume.pdf"}>
+                          <FileUser className="size-6" />
+                        </Link>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="w-fit py-2" side="left">
+                        <p className="text-xs">Resume</p>
+                      </HoverCardContent>
+                    </HoverCard>
+                  </div>
+                  <div className="flex flex-col w-fit h-fit items-center pb-8">
+                    <HoverCard openDelay={0} closeDelay={0}>
+                      <HoverCardTrigger asChild>
+                        <Link href={"/Cover_Letter.pdf"}>
+                          <Mail className="size-6" />
+                        </Link>
+                      </HoverCardTrigger>
+                      <HoverCardContent className="w-fit py-2" side="right">
+                        <p className="text-xs">Cover letter</p>
+                      </HoverCardContent>
+                    </HoverCard>
+                  </div>
+                </div>
               </div>
               <div className="text-right">
                 <p className=" font-bold">
@@ -77,8 +107,7 @@ export default function RootLayout({
                     href="https://github.com/rreeves8/personal-site-v3"
                     target="_blank"
                     className=" text-blue-600"
-                    aria-label="GitHub repository"
-                  >
+                    aria-label="GitHub repository">
                     Source
                   </Link>
                 </p>
@@ -91,7 +120,7 @@ export default function RootLayout({
   );
 }
 
-const routes = ["experience", "personal", "projects", "socials"];
+const routes = ["experience", "personal", "projects"];
 
 function Nav() {
   return (
@@ -139,13 +168,11 @@ function Resume() {
     <Button
       variant="ghost"
       className="text-xl font-normal tracking-tight"
-      asChild
-    >
+      asChild>
       <a
         href="/Resume.pdf"
         className="flex flex-row items-center gap-2"
-        download="Resume.pdf"
-      >
+        download="Resume.pdf">
         resume
         <Download />
       </a>
