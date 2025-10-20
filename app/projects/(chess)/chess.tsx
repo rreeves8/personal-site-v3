@@ -12,7 +12,13 @@ import {
 import Image from "next/image";
 import { Chess as ChessEngine, Move, Piece } from "chess.js";
 import { minimaxC } from "./c++";
-import { Rnd } from "react-rnd";
+
+/**
+ *    I am aware of how sloppy some of these handlers are
+ *
+ *
+ *
+ */
 
 export const Pieces = {
   kw: "imgs/king-white.png",
@@ -158,8 +164,8 @@ export function Chess() {
   return (
     <section
       ref={container}
-      className="flex flex-1 h-full w-full min-h-0 min-w-0 p-2 relative">
-      <div className="grid grid-cols-8 grid-rows-8 gap-0 w-full h-full bg-white rounded">
+      className="flex flex-1 h-full relative justify-center items-center p-2">
+      <div className="grid grid-cols-8 grid-rows-8 gap-0 bg-white rounded w-full h-full">
         {board.flatMap((row, i) =>
           row.map((c, j) => (
             <Cell
@@ -271,7 +277,7 @@ function Cell({
       key={j}
       disabled={disabled}
       property={`${i},${j}`}
-      className="p-0 border-2 w-full h-full"
+      className="p-0 border-2  w-full h-full"
       style={style}
       onMouseDown={c && c.color === "w" ? onMove : undefined}>
       {c && (

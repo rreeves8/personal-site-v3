@@ -14,7 +14,7 @@ const Projects = dynamic(() => import("./(projects)/projects"), {
 
 export default function Page() {
   return (
-    <div className="w-4/5 mx-auto flex flex-col flex-1">
+    <div className="w-11/12 sm:w-4/5 mx-auto flex flex-col flex-1">
       <Projects />
     </div>
   );
