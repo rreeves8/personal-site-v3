@@ -124,7 +124,7 @@ const routes = ["experience", "personal", "projects"];
 
 function Nav() {
   return (
-    <div className="fixed z-10 w-full flex items-center justify-center h-14 py-5 backdrop-blur-md">
+    <div className="fixed z-1000 w-full flex items-center justify-center h-14 py-5 backdrop-blur-md">
       <div className="hidden lg:flex flex-row items-center justify-between basis-3/4">
         <div className="flex flex-row items-center justify-center gap-1">
           <Icon />
