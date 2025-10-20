@@ -9,6 +9,7 @@ import { useHover } from "@/components/hooks";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { Chess } from "../(chess)/chess";
+import Link from "next/link";
 
 type Window = { type: "tanks" | "chess" | "info"; id: string; active: boolean };
 
@@ -104,7 +105,17 @@ function WindowC({ id, type, active }: Window) {
           <div className="flex flex-col w-full h-full p-3 gap-3 text-center ">
             <h1 className="text-2xl">Info</h1>
             <p>Check out some of the games I've created!</p>
-            <p>Chess is fully functional.</p>
+            <p>
+              Chess is fully functional.{" "}
+              <Link
+                target="_blank"
+                className=" text-blue-600"
+                href={
+                  "https://github.com/rreeves8/chess-minimax-c-plus-plus/blob/main/main.cpp"
+                }>
+                source
+              </Link>
+            </p>
             <p>
               However tanks is still being implemented, I'm working on a path
               finding algorithm in C++.
@@ -187,7 +198,7 @@ function BottomBar() {
         <button
           className="h-8 px-3 bg-white border-2 border-black shadow-[2px_2px_0_#000] font-black text-sm hover:brightness-110"
           onClick={() => add("info")}>
-          START
+          INFO
         </button>
       </div>
     </div>
