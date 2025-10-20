@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   MouseEventHandler,
+  RefObject,
   useCallback,
   useEffect,
   useRef,
@@ -69,8 +70,11 @@ export function Chess() {
 
   const onTouchMove = useCallback((e: TouchEvent) => {
     e.preventDefault();
-    const { pageX, pageY } = e.touches[0];
-    setDragPos([pageX - 32, pageY - 32]);
+    const { clientX, clientY } = e.touches[0];
+    if (container.current) {
+      const rect = container.current.getBoundingClientRect();
+      setDragPos([clientX - rect.left - 20, clientY - rect.top - 20]);
+    }
   }, []);
 
   const onTouchUp = useCallback(
@@ -167,7 +171,7 @@ export function Chess() {
               clicked={clicked}
               setDragPos={setDragPos}
               setClicked={setClicked}
-              gameOver={chess.isGameOver()}
+              container={container}
             />
           ))
         )}
@@ -207,7 +211,7 @@ function Cell({
   computing,
   setDragPos,
   setClicked,
-  gameOver,
+  container,
 }: {
   i: number;
   j: number;
@@ -216,7 +220,7 @@ function Cell({
   computing: boolean;
   setDragPos: (x: [number, number]) => void;
   setClicked: (x: [number, number, "mouse" | "touch"]) => void;
-  gameOver: boolean;
+  container: RefObject<HTMLDivElement | null>;
 }) {
   const ref = useRef<HTMLButtonElement>(null);
   const disabled = clicked || computing ? true : false;
@@ -227,7 +231,11 @@ function Cell({
 
   const onMove: MouseEventHandler<HTMLButtonElement> = useCallback(
     ({ clientX, clientY }) => {
-      setDragPos([clientX, clientY]);
+      if (container.current) {
+        const rect = container.current.getBoundingClientRect();
+        setDragPos([clientX - rect.left - 20, clientY - rect.top - 20]);
+      }
+
       setClicked([i, j, "mouse"]);
     },
     [setDragPos, setClicked]
@@ -236,9 +244,11 @@ function Cell({
   const onMobileTouch = useCallback(
     (e: TouchEvent) => {
       e.preventDefault();
-      console.log("clucked");
-      const { pageX, pageY } = e.touches[0];
-      setDragPos([pageX - 32, pageY - 32]);
+      if (container.current) {
+        const { clientX, clientY } = e.touches[0];
+        const rect = container.current.getBoundingClientRect();
+        setDragPos([clientX - rect.left - 20, clientY - rect.top - 20]);
+      }
       setClicked([i, j, "touch"]);
     },
     [setDragPos, setClicked]
