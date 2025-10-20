@@ -11,6 +11,7 @@ import {
 import Image from "next/image";
 import { Chess as ChessEngine, Move, Piece } from "chess.js";
 import { minimaxC } from "./c++";
+import { Rnd } from "react-rnd";
 
 export const Pieces = {
   kw: "imgs/king-white.png",
@@ -35,7 +36,6 @@ function ijToAj(i: number, j: number) {
 
 export function Chess() {
   const [chess] = useState(() => new ChessEngine());
-
   const board = chess.board();
   const [clicked, setClicked] = useState<
     [number, number, "mouse" | "touch"] | null
@@ -48,9 +48,15 @@ export function Chess() {
 
   const container = useRef<HTMLDivElement>(null);
 
-  const onMouseMove = useCallback(({ screenX, screenY }: MouseEvent) => {
-    setDragPos([screenX, screenY]);
-  }, []);
+  const onMouseMove = useCallback(
+    ({ clientX, clientY }: MouseEvent) => {
+      if (container.current) {
+        const rect = container.current.getBoundingClientRect();
+        setDragPos([clientX - rect.left - 20, clientY - rect.top - 20]);
+      }
+    },
+    [container]
+  );
 
   const onMouseUp = useCallback(
     (e: MouseEvent) => {
@@ -148,8 +154,7 @@ export function Chess() {
   return (
     <section
       ref={container}
-      className="flex flex-1 h-full w-full min-h-0 min-w-0 p-2"
-    >
+      className="flex flex-1 h-full w-full min-h-0 min-w-0 p-2 relative">
       <div className="grid grid-cols-8 grid-rows-8 gap-0 w-full h-full bg-white rounded">
         {board.flatMap((row, i) =>
           row.map((c, j) => (
@@ -167,11 +172,11 @@ export function Chess() {
           ))
         )}
       </div>
+
       {clicked && dragPos && (
         <div
-          className="absolute w-10 h-10"
-          style={{ left: `${dragPos[0]}px`, top: `${dragPos[1]}px` }}
-        >
+          className="absolute w-10 h-10 pointer-events-none z-10"
+          style={{ left: `${dragPos[0]}px`, top: `${dragPos[1]}px` }}>
           <div className="flex justify-center items-center">
             {(() => {
               const c = board[board.length - 1 - clicked[0]][clicked[1]]!;
@@ -221,8 +226,8 @@ function Cell({
   };
 
   const onMove: MouseEventHandler<HTMLButtonElement> = useCallback(
-    ({ screenX, screenY }) => {
-      setDragPos([screenX, screenY]);
+    ({ clientX, clientY }) => {
+      setDragPos([clientX, clientY]);
       setClicked([i, j, "mouse"]);
     },
     [setDragPos, setClicked]
@@ -258,8 +263,7 @@ function Cell({
       property={`${i},${j}`}
       className="p-0 border-2 w-full h-full"
       style={style}
-      onMouseDown={c && c.color === "w" ? onMove : undefined}
-    >
+      onMouseDown={c && c.color === "w" ? onMove : undefined}>
       {c && (
         <div className="relative w-full h-full">
           <Image
