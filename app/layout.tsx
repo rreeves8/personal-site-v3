@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import "nprogress/nprogress.css";
 import { Button } from "@/components/ui/button";
 import { Download, FileUser, Mail, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -20,6 +18,9 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import "nprogress/nprogress.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -115,6 +116,7 @@ export default function RootLayout({
             </footer>
           </div>
         </LoadingProvider>
+        <Analytics />
       </body>
     </html>
   );

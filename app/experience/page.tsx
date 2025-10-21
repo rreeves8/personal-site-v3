@@ -90,7 +90,7 @@ const sections = [
     title: "Projects",
     data: [
       {
-        title: "Cloud Canvas",
+        title: "Architect",
         subtitle: "AWS infrastructure composer",
         description:
           "Accelerated AWS infrastructure provisioning by building a PaaS with TypeScript, React, and Remix on AWS Lambda, S3, and CloudFront, offering visual diagram-based deployment.",
@@ -137,8 +137,7 @@ function Section({
           {data.map((item) => (
             <div
               key={item.title}
-              className="flex flex-col space-y-2 border-l-4 border-blue-700 pl-4"
-            >
+              className="flex flex-col space-y-2 border-l-4 border-blue-700 pl-4">
               <h3 className="text-md sm:text-xl font-semibold">{item.title}</h3>
               <p className="text-sm sm:text-md font-semibold">
                 {item.subtitle}
@@ -177,8 +176,7 @@ const SkillsCarousel = () => {
         {skills.map((skill) => (
           <CarouselItem
             key={skill.title}
-            className="pl-1 md:basis-1/2 lg:basis-1/3"
-          >
+            className="pl-1 md:basis-1/2 lg:basis-1/3">
             <div className="h-full p-1">
               <Card className="flex h-full flex-col">
                 <CardHeader>
